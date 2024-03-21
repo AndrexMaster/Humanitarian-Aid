@@ -1,18 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Box, Typography} from "@mui/material";
+import axios from "axios";
 
 export const MenuList = () => {
-    const menuList = [
-        {
-            title: 'Головна',
-            link: '/'
-        },
-        {
-            title: 'Каталог',
-            link: '/products'
-        },
-    ]
+    const [menuList, setMenuList] = useState([])
+
+    useEffect(() => {
+        axios('/api/headerMenu')
+            .then(response => {
+                setMenuList(response.data.menu);
+            })
+    }, []);
 
     return (
         <Box
@@ -42,10 +41,10 @@ export const MenuList = () => {
                 }
             }}
         >
-            {menuList.map((item, index) => {
+            {menuList?.length > 0 && menuList.map((item, index) => {
                 return (
                     <NavLink
-                        to={item.link}
+                        to={item.url}
                         key={index}
                         className={({ isActive, isPending, isTransitioning }) =>
                             [

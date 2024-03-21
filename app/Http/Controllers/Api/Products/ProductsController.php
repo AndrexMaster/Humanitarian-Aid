@@ -33,7 +33,7 @@ class ProductsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'mediaFile' => 'required|file',
-//            'categoryId' => 'required|number',
+            'categoryId' => 'required|int',
         ]);
 
         $directory = 'uploads';
@@ -50,7 +50,7 @@ class ProductsController extends Controller
             'description' => $request->description,
             'price' => 0,
             'image_src' => Storage::url($filePath),
-            'category_id' => 1,
+            'category_id' =>  $request->categoryId,
             'user_id' => Auth::id(),
         ]);
 

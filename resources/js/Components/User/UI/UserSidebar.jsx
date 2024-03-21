@@ -1,7 +1,9 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 export const UserSidebar = ({activeTab, setActiveTab}) => {
+    const navigate = useNavigate()
 
         return (
             <Box
@@ -32,7 +34,12 @@ export const UserSidebar = ({activeTab, setActiveTab}) => {
                             backgroundColor: activeTab !== 0 && 'theme.primary',
                         }
                     }}
-                    onClick={() => setActiveTab(0)}
+                    onClick={() => {
+                        setActiveTab(0);
+                        navigate('')
+
+                    }}
+
                 >
                     <Typography>
                         Данні користувача
@@ -50,7 +57,10 @@ export const UserSidebar = ({activeTab, setActiveTab}) => {
                             backgroundColor: activeTab !== 1 && 'theme.primary',
                         }
                     }}
-                    onClick={() => setActiveTab(1)}
+                    onClick={() => {
+                        setActiveTab(1)
+                        navigate('products')
+                    }}
                 >
                     <Typography>
                         Список товарів користувача

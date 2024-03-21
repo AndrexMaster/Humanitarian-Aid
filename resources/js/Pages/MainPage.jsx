@@ -1,43 +1,29 @@
-import React from "react";
-import {ProductList} from "../Components/Products/ProductList";
+import React, {useEffect, useState} from "react";
 import {PageLayout} from "../Layouts/PageLayout";
 import {SectionLayout} from "../Layouts/SectionLayout";
+import axios from "axios";
+import {ProductsCategory} from "../Components/Products/ProductsCategory.jsx";
 
 export const MainPage = () => {
-    const products = [
-        {
-            id: 1,
-            name: 'Product 1',
-            description: 'Description 1',
-            category: 'Category 1',
-            price: 100
-        },
-        {
-            id: 2,
-            name: 'Product 2',
-            description: 'Description 2',
-            category: 'Category 2',
-            price: 200
-        },
-        {
-            id: 3,
-            name: 'Product 3',
-            description: 'Description 3',
-            category: 'Category 3',
-            price: 300
-        },
-    ];
+    const [categories, setCategories] = useState([])
 
+    useEffect(() => {
+        axios.get('/api/categories').then(response => {
+            setCategories(response.data.categories);
+        });
+    }, []);
 
     return (
         <PageLayout>
-            <SectionLayout
-                heading={'Featured Products'}
-                viewAllLink={'/products'}
-            >
-                <ProductList products={products}/>
-
-            </SectionLayout>
+            {categories?.length > 0 && categories.map(category => (
+                <SectionLayout
+                    key={category.id}
+                    heading={category.name}
+                    viewAllLink={`/products/${category.slug}`}
+                >
+                    <ProductsCategory categorySlug={category.slug}/>
+                </SectionLayout>
+            ))}
         </PageLayout>
     )
 }

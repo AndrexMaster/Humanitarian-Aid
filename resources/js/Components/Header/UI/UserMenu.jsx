@@ -1,8 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {Avatar, Box, Button, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
+import React, { useState } from 'react';
+import {
+    Avatar,
+    Box,
+    Button,
+    Menu,
+    MenuItem,
+    Tooltip
+} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import axios from "axios";
 
 export const UserMenu = ({setAuthToken}) => {
     const navigate = useNavigate();
@@ -66,7 +71,7 @@ export const UserMenu = ({setAuthToken}) => {
                         <MenuItem onClick={() => navigate(`user/${userId}`)}>
                             Профіль
                         </MenuItem>
-                        <MenuItem onClick={() => navigate(`user/${userId}#products`)}>
+                        <MenuItem onClick={() => navigate(`user/${userId}/products`)}>
                             Мої товари</MenuItem>
                         <MenuItem onClick={() => {
                             handleClose()

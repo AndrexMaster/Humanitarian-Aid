@@ -4,7 +4,12 @@ import {Box, Paper} from "@mui/material";
 import {UserMenu} from "./UI/UserMenu.jsx";
 import {MenuList} from "./UI/MenuList.jsx";
 
-export const Header = ({setAuthToken}) => {
+export const Header = (props) => {
+    const {
+        setAuthToken,
+        categories,
+    } = props;
+
     return (
         <>
             <Paper
@@ -22,7 +27,7 @@ export const Header = ({setAuthToken}) => {
                     }}
                 >
                     <Box sx={{height: '40px', width: '40px'}}></Box>
-                    <MenuList/>
+                    <MenuList categories={categories}/>
                     <UserMenu setAuthToken={setAuthToken}/>
                 </Box>
             </Paper>

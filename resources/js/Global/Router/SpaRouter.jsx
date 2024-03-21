@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Navigate, redirect, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import { Header } from "../../Components/Header/Header";
 import {MainPage} from "../../Pages/MainPage.jsx";
 import {ProductPage} from "../../Pages/ProductPage.jsx";
@@ -8,7 +8,7 @@ import {UserPage} from "../../Pages/UserPage.jsx";
 import {AuthPage} from "../../Pages/AuthPage.jsx";
 
 export const SpaRouter = () => {
-    const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'))
+    const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
 
     useEffect(() => {
         setAuthToken(localStorage.getItem('authToken'))
@@ -25,8 +25,8 @@ export const SpaRouter = () => {
                         </Route>
                     </Route>
                     <Route path='/products'>
-                        <Route index element={<ProductsPage/>} />
-                        <Route path=':category' element={<ProductsPage/>}/>
+                        <Route index element={<Navigate to="/"/>} />
+                        <Route path=':categorySlug' element={<ProductsPage/>}/>
                         <Route path=':productId' element={<ProductPage/>} />
                     </Route>
                     {authToken ?

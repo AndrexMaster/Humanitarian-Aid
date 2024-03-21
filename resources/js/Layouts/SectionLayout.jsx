@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
 export const SectionLayout = (props) => {
@@ -17,12 +17,13 @@ export const SectionLayout = (props) => {
                 gap: 2,
             }}
         >
-            <Paper
+            <Box
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     p: 2,
+                    borderBottom: '2px solid #c6c6c6',
                 }}
             >
                 <Typography component={'h3'} variant={'h5'}>
@@ -37,7 +38,7 @@ export const SectionLayout = (props) => {
                         </Typography>
                     </Link>
                 )}
-            </Paper>
+            </Box>
             <Box>{children}</Box>
         </Box>
     )

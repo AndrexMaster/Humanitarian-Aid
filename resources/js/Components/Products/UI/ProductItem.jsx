@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, CardActions, CardContent, CardMedia, Paper, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 
 export const ProductItem = (props) => {
@@ -26,7 +26,7 @@ export const ProductItem = (props) => {
                     height: 140,
                     cursor: 'pointer',
                 }}
-                image={product.image_src ?? ''}
+                image={product.image_src ?? 'https://via.placeholder.com/150'}
                 title="green iguana"
                 onClick={() => navigate(`/products/${product.category}/${product.id}`)}
             />

@@ -16,6 +16,6 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class); // Устанавливаем отношение "имеет много"
+        return $this->hasMany(Product::class);
     }
 }

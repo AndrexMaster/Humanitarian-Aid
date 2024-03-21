@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Categories\CategoriesController;
+use App\Http\Controllers\Api\Global\IndexController;
 use App\Http\Controllers\Api\Products\ProductsController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Http\Request;
@@ -45,6 +47,15 @@ Route::prefix('products')->group(static function (){
         Route::post('/addProduct', [ProductsController::class, 'addProduct']);
     });
 });
+
+Route::prefix('categories')->group(static function (){
+    Route::get('/', [CategoriesController::class, 'index']);
+    Route::get('/{categorySlug}', [CategoriesController::class, 'category']);
+    Route::get('/{categorySlug}/products', [CategoriesController::class, 'categoryProducts']);
+});
+
+Route::get('/headerMenu', [IndexController::class, 'headerMenu']);
+
 
 Route::get('/storage/{filename}', function ($filename) {
     $path = storage_path('app/public/' . $filename);

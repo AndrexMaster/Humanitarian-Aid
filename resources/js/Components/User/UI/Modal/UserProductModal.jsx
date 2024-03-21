@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import {
+    Autocomplete,
     Box,
-    Button,
+    Button, CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
     Divider,
-    Input,
     TextField,
     Typography
 } from "@mui/material";
@@ -24,17 +24,27 @@ export const UserProductModal = (props) => {
 
     const inputRef = useRef(null);
     const token = localStorage.getItem('authToken');
+    const [open, setOpen] = React.useState(false);
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [imageSrc, setImageSrc] = useState('')
     const [mediaFile, setMediaFile] = useState(null)
+    const [categories, setCategories] = useState([])
+    const [currentCategory, setCurrentCategory] = useState('')
+
+
+    useEffect(() => {
+        axios.get('/api/categories').then(response => {
+            setCategories(response.data.categories);
+        });
+    }, []);
 
     const [newProduct, setNewProduct] = useState({
         name: '',
         description: '',
         image_src: '',
         mediaFile: '',
+        categoryId: '',
     });
 
     useEffect(() => {
@@ -49,9 +59,6 @@ export const UserProductModal = (props) => {
         const selectedFile = event.target.files[0];
         const filePath = URL.createObjectURL(selectedFile);
 
-        console.log('selectedFile', selectedFile);
-        console.log('filePath', filePath);
-
         setNewProduct(prevState => ({
             ...prevState,
             image_src: filePath,
@@ -59,7 +66,6 @@ export const UserProductModal = (props) => {
         }));
 
         setMediaFile(selectedFile);
-        setImageSrc(filePath);
     };
 
     const handleAddProduct = async (e) => {
@@ -68,7 +74,9 @@ export const UserProductModal = (props) => {
         if (
             name.length < 3 ||
             description.length < 3 ||
-            !mediaFile
+            !mediaFile ||
+            currentCategory === ''
+
         ) {
             return;
         }
@@ -77,6 +85,7 @@ export const UserProductModal = (props) => {
         formData.append('name', name);
         formData.append('description', description);
         formData.append('mediaFile', mediaFile);
+        formData.append('categoryId', currentCategory.id);
 
         try {
             const response = await axios.post('/api/products/addProduct', formData, {
@@ -135,24 +144,6 @@ export const UserProductModal = (props) => {
                             width: '100%',
                         }}
                     >
-                        <TextField
-                            required
-                            id="product_name"
-                            label="Назва товару"
-                            name={'product_name'}
-                            onChange={(e) => setName(e.target.value)}
-                            sx={{width: '100%'}}
-                        />
-                        <TextField
-                            required
-                            id="product_description"
-                            label="Опис товару"
-                            name={'product_description'}
-                            onChange={(e) => setDescription(e.target.value)}
-                            multiline
-                            maxRows={4}
-                            sx={{width: '100%'}}
-                        />
                         <Box
                             sx={{width: '100%'}}
                         >
@@ -172,6 +163,51 @@ export const UserProductModal = (props) => {
                                 Upload file
                             </Button>
                         </Box>
+                        <TextField
+                            required
+                            id="product_name"
+                            label="Назва товару"
+                            name={'product_name'}
+                            onChange={(e) => setName(e.target.value)}
+                            sx={{width: '100%'}}
+                        />
+                        <TextField
+                            required
+                            id="product_description"
+                            label="Опис товару"
+                            name={'product_description'}
+                            onChange={(e) => setDescription(e.target.value)}
+                            multiline
+                            maxRows={4}
+                            sx={{width: '100%'}}
+                        />
+                        <Autocomplete
+                            id="categories"
+                            sx={{ width: '100%' }}
+                            open={open}
+                            onOpen={() => setOpen(true)}
+                            onClose={() => setOpen(false)}
+                            onChange={(event, value) => setCurrentCategory(value)}
+                            isOptionEqualToValue={(option, value) => option.id === value.id} // Изменено на соответствующее поле идентификатора
+                            getOptionLabel={(option) => option.name} // Изменено на соответствующее поле имени категории
+                            options={categories}
+                            loading={categories.length === 0}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Asynchronous"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <React.Fragment>
+                                                {categories.length === 0 ? <CircularProgress color="inherit" size={20} /> : null}
+                                                {params.InputProps.endAdornment}
+                                            </React.Fragment>
+                                        ),
+                                    }}
+                                />
+                            )}
+                        />
                     </Box>
                 </Box>
             </DialogContent>
