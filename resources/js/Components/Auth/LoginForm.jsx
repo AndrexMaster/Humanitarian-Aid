@@ -2,17 +2,25 @@ import React, {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setUser, setUserId} from "../../Storage/Redux/Auth/authSlice.js";
 
-export const LoginForm = () => {
-    const navigate = useNavigate()
+export const LoginForm = (props) => {
+    const {
+        formStyles
+    } = props
 
-    const [userEmail, setUserEmail] = useState('')
-    const [userEmailError, setUserEmailError] = useState('')
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [userPassword, setUserPassword] = useState('')
-    const [userPasswordError, setUserPasswordError] = useState('')
+    const [userEmail, setUserEmail] = useState('');
+    const [userEmailError, setUserEmailError] = useState('');
+
+    const [userPassword, setUserPassword] = useState('');
+    const [userPasswordError, setUserPasswordError] = useState('');
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
 
     const handleEmailChange = (e) => {
         const newEmail = e.target.value;
@@ -70,6 +78,8 @@ export const LoginForm = () => {
             const userId = response.data.userId;
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('userId', userId);
+            dispatch(setUserId(userId));
+            dispatch(setUser(response.data.user));
 
             navigate('/');
         } catch (error) {
@@ -90,7 +100,8 @@ export const LoginForm = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
-                py: 2
+                py: 2,
+                ...formStyles
             }}
         >
             <TextField

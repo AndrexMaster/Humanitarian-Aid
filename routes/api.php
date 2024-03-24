@@ -50,6 +50,7 @@ Route::prefix('products')->group(static function (){
 
 Route::prefix('categories')->group(static function (){
     Route::get('/', [CategoriesController::class, 'index']);
+    Route::get('/withProducts', [CategoriesController::class, 'categoriesWithProducts']);
     Route::get('/{categorySlug}', [CategoriesController::class, 'category']);
     Route::get('/{categorySlug}/products', [CategoriesController::class, 'categoryProducts']);
 });

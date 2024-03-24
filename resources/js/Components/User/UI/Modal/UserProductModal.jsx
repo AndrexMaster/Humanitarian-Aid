@@ -42,9 +42,12 @@ export const UserProductModal = (props) => {
     const [newProduct, setNewProduct] = useState({
         name: '',
         description: '',
-        image_src: '',
+        imageSrc: '',
         mediaFile: '',
-        categoryId: '',
+        category: {
+            id: '',
+            name: '',
+        }
     });
 
     useEffect(() => {
@@ -55,13 +58,24 @@ export const UserProductModal = (props) => {
         }));
     }, [name, description]);
 
+    const handleCategoryAdd = (event, value) => {
+        setCurrentCategory(value);
+        setNewProduct(prevState => ({
+            ...prevState,
+            category: {
+                id: currentCategory.id,
+                name: currentCategory.name,
+            }
+        }));
+    }
+
     const handleImageChange = (event) => {
         const selectedFile = event.target.files[0];
         const filePath = URL.createObjectURL(selectedFile);
 
         setNewProduct(prevState => ({
             ...prevState,
-            image_src: filePath,
+            imageSrc: filePath,
             mediaFile: selectedFile
         }));
 
@@ -96,6 +110,7 @@ export const UserProductModal = (props) => {
             });
             setUserProducts(prevProducts => [...prevProducts, response.data.product]);
             console.log('Registration successful', response.data);
+            setIsOpenDialog(false)
         } catch (error) {
             if (error.response) {
                 // Якщо відповідь з сервера містить статус помилки

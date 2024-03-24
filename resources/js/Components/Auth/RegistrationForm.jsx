@@ -29,7 +29,7 @@ export const RegistrationForm = () => {
 
     const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const textRegex = /^[A-Za-zА-Яа-яЁё]{3,}$/;
+    const textRegex = /^[A-Za-zА-яЁёІі]{2,}$/;
 
 
     const handleUserNameChange = (e) => {
@@ -37,7 +37,7 @@ export const RegistrationForm = () => {
         setUserName(newName);
 
         if (!textRegex.test(newName)) {
-            setUserNameError('Ім\'я повинно містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
+            setUserNameError('Ім\'я повинно містити тільки символи кирилиці або латини та бути довжиною від 2 символів та не містити пробілів');
         } else {
             setUserNameError('');
         }
@@ -48,7 +48,7 @@ export const RegistrationForm = () => {
         setUserSecondName(newSecondName);
 
         if (!textRegex.test(newSecondName)) {
-            setUserSecondNameError('Прізвище повинно містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
+            setUserSecondNameError('Прізвище повинно містити тільки символи кирилиці або латини та бути довжиною від 2 символів');
         } else {
             setUserSecondNameError('');
         }
@@ -59,7 +59,7 @@ export const RegistrationForm = () => {
         setUserLastName(newLastName);
 
         if (!textRegex.test(newLastName)) {
-            setUserLastNameError('По-батькові повинно містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
+            setUserLastNameError('По-батькові повинно містити тільки символи кирилиці або латини та бути довжиною від 2 символів');
         } else {
             setUserLastNameError('');
         }
@@ -68,12 +68,6 @@ export const RegistrationForm = () => {
     const handleCompanyNameChange = (e) => {
         const newCompanyName = e.target.value;
         setCompanyName(newCompanyName);
-
-        if (!textRegex.test(newCompanyName)) {
-            setCompanyNameError('Назва компанії повинна містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
-        } else {
-            setCompanyNameError('');
-        }
     };
 
     const handleEmailChange = (e) => {
@@ -126,11 +120,6 @@ export const RegistrationForm = () => {
 
         if (!textRegex.test(userLastName)) {
             setUserLastNameError('По-батькові повинно містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
-            isValid = false;
-        }
-
-        if (!textRegex.test(companyName)) {
-            setCompanyNameError('Назва компанії повинна містити тільки символи кирилиці або латини та бути довжиною від 3 символів');
             isValid = false;
         }
 

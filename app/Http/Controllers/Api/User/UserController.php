@@ -30,7 +30,23 @@ class UserController extends Controller
     public function userProducts(Request $request, $userId)
     {
         $products = Product::where('user_id', $userId)->get();
-        return response()->json(['products' => $products]);
+
+        $productsWithCategories = [];
+
+        foreach ($products as $product) {
+            $productsWithCategories[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price,
+                'imageSrc' => $product->image_src,
+                'category' => [
+                    'name' => $product->category->name,
+                    'slug' => $product->category->slug,
+                ],
+            ];
+        }
+        return response()->json(['products' => $productsWithCategories]);
     }
 
     public function userNotifications(Request $request)

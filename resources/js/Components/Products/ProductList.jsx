@@ -3,7 +3,8 @@ import {ProductItem} from "./UI/ProductItem.jsx";
 import {Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {Masonry} from "@mui/lab";
 
-export const ProductList = ({products}) => {
+export const ProductList = (props) => {
+    const {products, category} = props
     const [isOpenDialog, setIsOpenDialog] = useState(false)
 
     const handleOrder = () => {
@@ -14,7 +15,7 @@ export const ProductList = ({products}) => {
         <Box>
             <Masonry columns={4} spacing={2}>
                 {products.map((product, index) => (
-                    <ProductItem key={index} setIsOpenDialog={setIsOpenDialog} product={product}/>
+                    <ProductItem key={index} category={category ?? {}} setIsOpenDialog={setIsOpenDialog} product={product}/>
                 ))}
             </Masonry>
             <Dialog

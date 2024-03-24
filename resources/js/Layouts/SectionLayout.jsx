@@ -1,6 +1,6 @@
 import React from "react";
-import {Box, Typography} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Box, Button, Divider, Paper, Typography} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const SectionLayout = (props) => {
     const {
@@ -8,6 +8,8 @@ export const SectionLayout = (props) => {
         viewAllLink,
         children,
     } = props;
+
+    const navigate = useNavigate()
 
     return (
         <Box
@@ -17,29 +19,27 @@ export const SectionLayout = (props) => {
                 gap: 2,
             }}
         >
-            <Box
+            <Paper
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     p: 2,
-                    borderBottom: '2px solid #c6c6c6',
                 }}
             >
-                <Typography component={'h3'} variant={'h5'}>
+                <Typography component="h3" variant="h5">
                     {heading}
                 </Typography>
                 {viewAllLink && (
-                    <Link
-                        to={viewAllLink}
+                    <Button
+                        variant="text"
+                        onClick={() => navigate(viewAllLink)}
                     >
-                        <Typography>
-                            View All
-                        </Typography>
-                    </Link>
+                        View All
+                    </Button>
                 )}
-            </Box>
-            <Box>{children}</Box>
+            </Paper>
+            <Paper sx={{p: 2}}>{children}</Paper>
         </Box>
     )
 }

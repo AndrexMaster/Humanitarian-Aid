@@ -8,10 +8,15 @@ import {SidebarLayout} from "../Layouts/SidebarLayout.jsx";
 import {UserTabLayout} from "../Layouts/UserTabLayout.jsx";
 import {useMatch} from "react-router-dom";
 
-export const UserPage = () => {
+export const UserPage = (props) => {
+    const {
+        isCurrentUser,
+    } = props;
+
     const [activeTab, setActiveTab] = useState(0)
-    const matchUserTab = useMatch('/user/:userId/:tab');
+    const matchUserTab = useMatch('/user/:tab');
     const userTab = matchUserTab?.params?.tab;
+
 
     useEffect(() => {
         if (userTab === 'products') {
@@ -35,16 +40,16 @@ export const UserPage = () => {
                 <SidebarLayout
                     heading={'Панель управління'}
                 >
-                    <UserSidebar activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    <UserSidebar activeTab={activeTab} isCurrentUser={isCurrentUser} setActiveTab={setActiveTab}/>
                 </SidebarLayout>
                     {activeTab === 0 && (
                         <UserTabLayout heading={'Данні користувача'}>
-                            <UserProfile/>
+                            <UserProfile isCurrentUser={isCurrentUser}/>
                         </UserTabLayout>
                     )}
                     {activeTab === 1 && (
-                        <UserTabLayout heading={'Виставленні користувача'}>
-                            <UserProducts/>
+                        <UserTabLayout heading={'Виставленні товари користувача'}>
+                            <UserProducts isCurrentUser={isCurrentUser}/>
                         </UserTabLayout>
                     )}
             </Box>

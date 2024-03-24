@@ -2,7 +2,13 @@ import React from "react";
 import {Box, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-export const UserSidebar = ({activeTab, setActiveTab}) => {
+export const UserSidebar = (props) => {
+    const {
+        isCurrentUser,
+        activeTab,
+        setActiveTab
+    } = props;
+
     const navigate = useNavigate()
 
         return (
@@ -36,7 +42,7 @@ export const UserSidebar = ({activeTab, setActiveTab}) => {
                     }}
                     onClick={() => {
                         setActiveTab(0);
-                        navigate('')
+                        navigate('/user')
 
                     }}
 
@@ -59,7 +65,7 @@ export const UserSidebar = ({activeTab, setActiveTab}) => {
                     }}
                     onClick={() => {
                         setActiveTab(1)
-                        navigate('products')
+                        navigate(isCurrentUser ? 'products' : '')
                     }}
                 >
                     <Typography>

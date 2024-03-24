@@ -6,30 +6,42 @@ import {ProductPage} from "../../Pages/ProductPage.jsx";
 import {ProductsPage} from "../../Pages/ProductsPage.jsx";
 import {UserPage} from "../../Pages/UserPage.jsx";
 import {AuthPage} from "../../Pages/AuthPage.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {setUserId, setUserToken} from "../../Storage/Redux/Auth/authSlice.js";
 
 export const SpaRouter = () => {
-    const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+    const dispatch = useDispatch();
+    const userToken = useSelector(state => state.user.userToken);
+    const userId = useSelector(state => state.user.userId);
+    const localStorageToken = localStorage.getItem('authToken');
+    const localStorageUserId = localStorage.getItem('userId');
 
     useEffect(() => {
-        setAuthToken(localStorage.getItem('authToken'))
-    }, [localStorage]);
+        if (localStorageToken && !userToken) {
+            dispatch(setUserToken(localStorageToken))
+        }
+
+        if (localStorageUserId && !userId) {
+            dispatch(setUserId(localStorageUserId))
+        }
+    }, [localStorageToken, localStorageUserId]);
 
     return (
         <>
             <Routes>
-                <Route path='/' element={<Header setAuthToken={setAuthToken} />}>
+                <Route path='/' element={<Header/>}>
                     <Route index element={<MainPage/>} />
                     <Route path='/user'>
-                        <Route path=':userId' element={<UserPage />}>
-                            <Route path=':tab' element={<UserPage/>} />
-                        </Route>
+                        <Route index element={<UserPage isCurrentUser={true}/>} />
+                        <Route path=':tab' element={<UserPage/>} />
+                        <Route path=':userId' element={<UserPage/>}/>
                     </Route>
                     <Route path='/products'>
                         <Route index element={<Navigate to="/"/>} />
                         <Route path=':categorySlug' element={<ProductsPage/>}/>
                         <Route path=':productId' element={<ProductPage/>} />
                     </Route>
-                    {authToken ?
+                    {userToken ?
                         <Route path='/auth' element={<Navigate to="/"/>}>
                             <Route index element={<Navigate to="/"/>} />
                             <Route path='*' element={<Navigate to="/"/>} />

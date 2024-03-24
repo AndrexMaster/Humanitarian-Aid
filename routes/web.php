@@ -23,7 +23,7 @@ Route::get('/auth', function () {
 
 
 Route::prefix('user')->group(function () {
-    Route::get('/{userId}', function () {
+    Route::get('/{userId?}', function () {
         return view('welcome');
     });
 

@@ -1,11 +1,12 @@
 import React from "react";
-import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
+import {Box, Button, Card, CardActions, CardContent, CardMedia, Chip, Typography} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 
 export const ProductItem = (props) => {
     const {
         product,
         setIsOpenDialog,
+        category
     } = props;
     let navigate = useNavigate();
 
@@ -14,21 +15,34 @@ export const ProductItem = (props) => {
             sx={{
                 maxWidth: 345,
                 transition: 'transform 0.3s ease',
-
+                position: 'relative',
                 '&:hover': {
                     boxShadow: '0 0 10px 0 rgba(0,0,0,0.2)',
                     transform: 'scale(1.05)',
                 }
             }}
         >
+            {(product?.category?.name ?? product?.category?.name) && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 10,
+                        left: 10,
+                    }}
+                >
+                    <Chip label={product?.category?.name} sx={{
+                        backgroundColor: '#FFFFFF',
+                    }} />
+                </Box>
+            ) }
             <CardMedia
                 sx={{
                     height: 140,
                     cursor: 'pointer',
                 }}
-                image={product.image_src ?? 'https://via.placeholder.com/150'}
+                image={product.imageSrc ?? 'https://via.placeholder.com/150'}
                 title="green iguana"
-                onClick={() => navigate(`/products/${product.category}/${product.id}`)}
+                onClick={() => navigate(`/products/${product.category.slug}/${product.id}`)}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

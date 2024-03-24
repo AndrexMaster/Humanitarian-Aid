@@ -13,7 +13,7 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
-
+        Product::with('category')->get();
         return response()->json(['message' => 'allProducts']);
     }
 
@@ -44,7 +44,7 @@ class ProductsController extends Controller
         $mediaFile = $request->file('mediaFile');
         $filePath = $mediaFile->store($directory);
 
-        $product = Product::create([
+        $newProduct = Product::create([
             'id' => Str::uuid(),
             'name' => $request->name,
             'description' => $request->description,
@@ -53,6 +53,9 @@ class ProductsController extends Controller
             'category_id' =>  $request->categoryId,
             'user_id' => Auth::id(),
         ]);
+
+        $product = Product::with('category')->find($newProduct->id);
+        $product->imageSrc = $product->image_src;
 
         return response()->json(['product' => $product]);
     }

@@ -19,7 +19,7 @@ class AuthController extends Controller
             'second_name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'company_name' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
             'password' => 'required|string|min:8',
         ]);
 
@@ -30,7 +30,7 @@ class AuthController extends Controller
                 'second_name' => $request->second_name,
                 'surname' => $request->surname,
                 'email' => $request->email,
-                'company_name' => $request->company_name,
+                'company_name' => $request->company_name ?? ' ',
                 'password' => Hash::make($request->password),
             ]);
 

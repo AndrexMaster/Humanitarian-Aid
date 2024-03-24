@@ -13,10 +13,12 @@ export const ProductsPage = () => {
         axios(`/api/categories/${categorySlug}/products`).then(response => {
             setCategoryProducts(response.data.products);
         });
-    }, []);
+    }, [categorySlug]);
     return (
-        <PageLayout>
-            <h1>Products Page</h1>
+        <PageLayout
+            heading={'Товари'}
+        >
+
             {categoryProducts && (
                 <ProductList products={categoryProducts}/>
             )}

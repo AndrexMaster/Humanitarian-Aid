@@ -8,11 +8,15 @@ import {
     Tooltip
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {userLogout} from "@/Storage/Redux/Auth/authSlice.js";
 
-export const UserMenu = ({setAuthToken}) => {
+export const UserMenu = () => {
     const navigate = useNavigate();
-    const authToken = localStorage.getItem('authToken');
-    const userId = localStorage.getItem('userId');
+    const dispatch = useDispatch();
+
+    const userToken = useSelector(state => state.user.userToken);
+
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false)
@@ -28,14 +32,14 @@ export const UserMenu = ({setAuthToken}) => {
     };
 
     const handleLogOut = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userId');
+        dispatch(userLogout())
+        handleClose()
         navigate('/');
     }
 
     return (
         <>
-            {!authToken ?
+            {!userToken ?
                 <Button variant="text" onClick={() => navigate('auth')}>Увійти</Button>
             :
                 <>
@@ -68,15 +72,13 @@ export const UserMenu = ({setAuthToken}) => {
                         }}
 
                     >
-                        <MenuItem onClick={() => navigate(`user/${userId}`)}>
+                        <MenuItem onClick={() => navigate(`user`)}>
                             Профіль
                         </MenuItem>
-                        <MenuItem onClick={() => navigate(`user/${userId}/products`)}>
+                        <MenuItem onClick={() => navigate(`user/products`)}>
                             Мої товари</MenuItem>
                         <MenuItem onClick={() => {
-                            handleClose()
                             handleLogOut()
-                            setAuthToken('')
                         }}>
                             Вийти з аккаунту
                         </MenuItem>

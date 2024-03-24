@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('second_name');
             $table->string('surname');
             $table->string('email')->unique();
-            $table->string('company_name');
+            $table->string('company_name')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('password');
+            $table->string('image_src')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
