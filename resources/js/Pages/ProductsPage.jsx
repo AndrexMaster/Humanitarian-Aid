@@ -12,6 +12,7 @@ export const ProductsPage = () => {
     useEffect(() => {
         axios(`/api/categories/${categorySlug}/products`).then(response => {
             setCategoryProducts(response.data.products);
+            console.log('response', response.data.products)
         });
     }, [categorySlug]);
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Chip, Typography} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ export const ProductItem = (props) => {
     const {
         product,
         setIsOpenDialog,
-        category
+        isPreview = false
     } = props;
     let navigate = useNavigate();
 
@@ -42,7 +42,7 @@ export const ProductItem = (props) => {
                 }}
                 image={product.imageSrc ?? 'https://via.placeholder.com/150'}
                 title="green iguana"
-                onClick={() => navigate(`/products/${product.category.slug}/${product.id}`)}
+                onClick={() => isPreview ? '' : navigate(`/products/${product.category.slug}/${product.id}`)}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -54,6 +54,7 @@ export const ProductItem = (props) => {
             </CardContent>
             <CardActions>
                 <Button
+                    disabled={isPreview}
                     variant={'contained'}
                     sx={{
                         width: '100%',

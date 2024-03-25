@@ -1,12 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, Grid, TextField, Typography} from "@mui/material";
 import axios from "axios";
+import {useMatch, useNavigate} from "react-router-dom";
 
-export const UserProfile = () => {
-    const [isEditMode, setIsEditMode] = useState(false)
-    const [user, setUser] = useState({})
+export const UserProfile = (props) => {
+    const {
+        isCurrentUser
+    } = props;
+    const navigate = useNavigate();
+
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('authToken');
+
+    const matchUserId = useMatch('/user/:userId');
+    const urlUserId = matchUserId?.params?.userId;
+
+    const [isEditMode, setIsEditMode] = useState(false)
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         const config = {
@@ -15,11 +25,12 @@ export const UserProfile = () => {
             }
         };
 
-        axios.get(`/api/user/${userId}`, config)
+        axios.get(`/api/user/${isCurrentUser ? userId : urlUserId }`, config)
             .then(response => {
                 setUser(response.data.user);
             })
             .catch(error => {
+                navigate('/');
                 console.log('error', error)
             })
     }, []);

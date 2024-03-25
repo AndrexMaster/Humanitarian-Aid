@@ -2,30 +2,33 @@ import React, {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {setUser, setUserId} from "@/Storage/Redux/Auth/authSlice.js";
+import {useDispatch} from "react-redux";
 
 export const RegistrationForm = () => {
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [userName, setUserName] = useState('')
-    const [userNameError, setUserNameError] = useState('')
+    const [userName, setUserName] = useState('');
+    const [userNameError, setUserNameError] = useState('');
 
-    const [userSecondName, setUserSecondName] = useState('')
-    const [userSecondNameError, setUserSecondNameError] = useState('')
+    const [userSecondName, setUserSecondName] = useState('');
+    const [userSecondNameError, setUserSecondNameError] = useState('');
 
-    const [userLastName, setUserLastName] = useState('')
-    const [userLastNameError, setUserLastNameError] = useState('')
+    const [userLastName, setUserLastName] = useState('');
+    const [userLastNameError, setUserLastNameError] = useState('');
 
-    const [companyName, setCompanyName] = useState('')
-    const [companyNameError, setCompanyNameError] = useState('')
+    const [companyName, setCompanyName] = useState('');
+    const [companyNameError, setCompanyNameError] = useState('');
 
-    const [userEmail, setUserEmail] = useState('')
-    const [userEmailError, setUserEmailError] = useState('')
+    const [userEmail, setUserEmail] = useState('');
+    const [userEmailError, setUserEmailError] = useState('');
 
-    const [userPassword, setUserPassword] = useState('')
-    const [userPasswordError, setUserPasswordError] = useState('')
+    const [userPassword, setUserPassword] = useState('');
+    const [userPasswordError, setUserPasswordError] = useState('');
 
-    const [userPasswordConfirmation, setUserPasswordConfirmation] = useState('')
-    const [userPasswordConfirmationError, setUserPasswordConfirmationError] = useState('')
+    const [userPasswordConfirmation, setUserPasswordConfirmation] = useState('');
+    const [userPasswordConfirmationError, setUserPasswordConfirmationError] = useState('');
 
     const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -165,7 +168,13 @@ export const RegistrationForm = () => {
                     password: userPassword,
                 });
                 const authToken = response.data.token;
+                const userId = response.data.userId;
+
                 localStorage.setItem('authToken', authToken);
+                localStorage.setItem('userId', userId);
+
+                dispatch(setUserId(userId));
+                dispatch(setUser(response.data.user));
                 navigate('/')
             } catch (error) {
                 if (error.response) {
@@ -226,7 +235,6 @@ export const RegistrationForm = () => {
                 name={'surname'}
             />
             <TextField
-                required
                 id="company_name_field"
                 label="Назва компанії"
                 onChange={(e) => handleCompanyNameChange(e)}

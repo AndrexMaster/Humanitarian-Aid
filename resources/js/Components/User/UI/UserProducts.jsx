@@ -5,11 +5,22 @@ import AddIcon from '@mui/icons-material/Add';
 import {ProductItem} from "../../Products/UI/ProductItem.jsx";
 import {UserProductModal} from "../../User/UI/Modal/UserProductModal.jsx";
 import {Masonry} from "@mui/lab";
+import {useMatch, useNavigate} from "react-router-dom";
 
-export const UserProducts = () => {
-    const [userProducts, setUserProducts] = useState({})
+export const UserProducts = (props) => {
+    const {
+        isCurrentUser,
+    } = props;
+    const navigate = useNavigate();
+
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('authToken');
+
+    const matchUserTab = useMatch('/user/:userId');
+    const urlUserId = matchUserTab?.params?.userId;
+
+
+    const [userProducts, setUserProducts] = useState({})
     const [isOpenDialog, setIsOpenDialog] = useState(false)
 
     useEffect(() => {
@@ -19,12 +30,13 @@ export const UserProducts = () => {
             }
         };
 
-        axios.get(`/api/user/${userId}/products`, config)
+        axios.get(`/api/user/${isCurrentUser ? userId : urlUserId }/products`, config)
             .then(response => {
                 console.log('response', response)
                 setUserProducts(response.data.products);
             })
             .catch(error => {
+                navigate('/')
                 console.log('error', error)
             })
     }, []);

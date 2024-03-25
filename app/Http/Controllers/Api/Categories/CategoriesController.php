@@ -51,7 +51,7 @@ class CategoriesController extends Controller
                 'id' => $category->id,
                 'name' => $category->name,
                 'slug' => $category->slug,
-                'products' => $categoryProducts, // Обновленный массив продуктов с добавленным именем категории
+                'products' => $categoryProducts,
             ];
         }
         return response()->json(['categories' => $categoriesArray]);
@@ -60,6 +60,21 @@ class CategoriesController extends Controller
     public function categoryProducts(Request $request, $categorySlug): JsonResponse
     {
         $category = Category::where('slug', $categorySlug)->first();
-        return response()->json(['products' => $category->products]);
+        $categoryProducts = [];
+
+        foreach ($category->products as $product) {
+            $categoryProducts[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price,
+                'imageSrc' => $product->image_src,
+                'category' => [
+                    'name' => $category->name,
+                    'slug' => $category->slug,
+                ],
+            ];
+        }
+        return response()->json(['products' => $categoryProducts]);
     }
 }

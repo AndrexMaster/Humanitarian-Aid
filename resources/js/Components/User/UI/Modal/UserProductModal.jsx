@@ -63,8 +63,8 @@ export const UserProductModal = (props) => {
         setNewProduct(prevState => ({
             ...prevState,
             category: {
-                id: currentCategory.id,
-                name: currentCategory.name,
+                id: value.id,
+                name: value.name,
             }
         }));
     }
@@ -128,6 +128,9 @@ export const UserProductModal = (props) => {
             onClose={() => setIsOpenDialog(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            sx={{
+                minWidth: '900px',
+            }}
         >
             <DialogTitle id="alert-dialog-title">
                 Створення нового продукту
@@ -135,11 +138,10 @@ export const UserProductModal = (props) => {
             <DialogContent>
                 <Box
                     sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
                         gap: 3,
-                        minWidth: '350px',
+                        width: '100%',
                     }}
                 >
                     <Box sx={{py: 2, width: '100%'}}>
@@ -202,7 +204,7 @@ export const UserProductModal = (props) => {
                             open={open}
                             onOpen={() => setOpen(true)}
                             onClose={() => setOpen(false)}
-                            onChange={(event, value) => setCurrentCategory(value)}
+                            onChange={handleCategoryAdd}
                             isOptionEqualToValue={(option, value) => option.id === value.id} // Изменено на соответствующее поле идентификатора
                             getOptionLabel={(option) => option.name} // Изменено на соответствующее поле имени категории
                             options={categories}

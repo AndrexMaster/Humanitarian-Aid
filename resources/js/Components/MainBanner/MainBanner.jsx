@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button, Chip, Container, Divider, Typography, useTheme} from "@mui/material";
 import {LoginForm} from "../Auth/LoginForm.jsx";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const MainBanner = () => {
+    const theme = useTheme()
+    const navigate = useNavigate();
     const authToken = localStorage.getItem('authToken');
     const userId = localStorage.getItem('userId');
     const [user, setUser] = useState({})
-    const theme = useTheme()
 
     useEffect(() => {
         if (userId === null) return;
@@ -52,51 +54,58 @@ export const MainBanner = () => {
                     <Box
                         sx={{
                             display: 'grid',
-                            gridTemplateColumns: '1fr auto 1fr',
+                            gridTemplateColumns: userId === null ? '1fr auto 1fr' : '1fr',
                             minHeight: '50vh',
-                            minWidth: '50vw',
+                            minWidth: userId === null ? '50vw' : '20vw',
+                            maxWidth: userId === null ? 'unset' : '40vw',
+                            mx: 'auto',
                             backgroundColor: theme.palette.background.default,
                             borderRadius: '20px',
                         }}
                     >
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-start',
-                                alignItems: 'center',
-                                p: 3,
-                                gap: 3
-                            }}
-                        >
-                            <Typography variant={'h4'}>
-                                Разом ми сила!
-                            </Typography>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flex: 1,
-                                    maxHeight: '100%',
-                                    overflow: 'auto',
-                                }}
-                            >
-                                <Typography
-                                    align="center"
-                                    gutterBottom
+                        {userId === null && (
+                            <>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'flex-start',
+                                        alignItems: 'center',
+                                        p: 3,
+                                        gap: 3
+                                    }}
                                 >
-                                    Приєднуйтесь до нашої спільноти, щоб надавати гуманітарну допомогу тим, хто її найбільше потребує. Зареєструйтеся зараз та долучайтеся до нашої ініціативи, де ви зможете безкоштовно віддати ті речі, які можуть допомогти іншим. Кожен ваш внесок має велике значення. Давайте разом допомагати тим, хто в цьому найбільше потребує!
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Divider orientation="vertical" variant="middle" flexItem sx={{my: '50px'}}/>
+                                    <Typography variant={'h4'}>
+                                        Разом ми сила!
+                                    </Typography>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flex: 1,
+                                            maxHeight: '100%',
+                                            overflow: 'auto',
+                                        }}
+                                    >
+                                        <Typography
+                                            align="center"
+                                            gutterBottom
+                                        >
+                                            Приєднуйтесь до нашої спільноти, щоб надавати гуманітарну допомогу тим, хто її найбільше потребує. Зареєструйтеся зараз та долучайтеся до нашої ініціативи, де ви зможете безкоштовно віддати ті речі, які можуть допомогти іншим. Кожен ваш внесок має велике значення. Давайте разом допомагати тим, хто в цьому найбільше потребує!
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <Divider orientation="vertical" variant="middle" flexItem sx={{my: '50px'}}/>
+                            </>
+                        )}
                         <Box
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                justifyContent: user === {} || userId === null ? 'flex-start' : 'space-between',
+                                gap: 2,
+                                justifyContent:userId === null ? 'flex-start' : 'space-between',
                                 boxSizing: 'border-box',
                                 width: '100%',
                                 height: '100%',
@@ -104,13 +113,13 @@ export const MainBanner = () => {
                             }}
                         >
                             <Typography variant={'h4'}>
-                                {user === {} || userId === null ?
+                                {userId === null ?
                                     'Увійти до аккаунту'
                                 :
                                     `Вітаємо, ${user?.name ?? ''} ${user?.secondName ?? ''} ${user?.surname ?? ''} !`
                                 }
                             </Typography>
-                            {user === {} || userId === null && (
+                            {userId === null && (
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -130,12 +139,12 @@ export const MainBanner = () => {
                             <Box
                                 sx={{
                                     width: '100%',
-                                    display: user === {} || userId === null ? 'block' : 'flex',
+                                    display: userId === null ? 'block' : 'flex',
                                     alignItems: 'center',
-                                    flex: user === {} || userId === null ? 1 : 0,
+                                    flex: userId === null ? 1 : 0,
                                 }}
                             >
-                                {user === {} || userId === null ? (
+                                {userId === null ? (
                                     <>
                                       <LoginForm formStyles={{py: 0, width: '100%',}}/>
                                       <Divider
@@ -155,7 +164,7 @@ export const MainBanner = () => {
                                     </Typography>
                                 )}
                             </Box>
-                            {user === {} || userId === null ?
+                            {userId === null ?
                                 null
                             : (
                                 <Box

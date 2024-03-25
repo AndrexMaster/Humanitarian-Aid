@@ -24,7 +24,12 @@ class ProductsController extends Controller
 
     public function product(Request $request)
     {
-        return response()->json(['message' => 'product']);
+        $request->validate([
+            'productId' => 'required|uuid',
+        ]);
+
+        $product = Product::with('category')->where('id', $request->productId)->get();
+        return response()->json(['product' => $product]);
     }
 
     public function addProduct(Request $request)
@@ -55,7 +60,6 @@ class ProductsController extends Controller
         ]);
 
         $product = Product::with('category')->find($newProduct->id);
-        $product->imageSrc = $product->image_src;
 
         return response()->json(['product' => $product]);
     }
