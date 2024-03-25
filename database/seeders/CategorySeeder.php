@@ -34,8 +34,8 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'Постільне білизна та ковдри',
-            'slug' => 'bedding'
+            'name' => 'Інше',
+            'slug' => 'another'
         ]);
 
         Category::create([
