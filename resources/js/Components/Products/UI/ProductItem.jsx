@@ -6,6 +6,7 @@ export const ProductItem = (props) => {
     const {
         product,
         setIsOpenDialog,
+        setProductToOrder,
         isPreview,
         isUserOwner,
         sx = {}
@@ -74,6 +75,7 @@ export const ProductItem = (props) => {
                         if (setIsOpenDialog) {
                             e.preventDefault();
                             setIsOpenDialog(true)
+                            setProductToOrder(product)
                         }
                     }}
                 >Замовити</Button>

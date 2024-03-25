@@ -50,15 +50,18 @@ export const ProductForm = ({isDescription, product}) => {
                 }}
             >
                 {isDescription && product.description?.length > 0 && (
-                    <Box
-                        sx={{
-                            flex: 1
-                        }}
-                    >
-                        <Typography>
-                            {product.description}
-                        </Typography>
-                    </Box>
+                    <>
+                        <Box
+                            sx={{
+                                flex: 1
+                            }}
+                        >
+                            <Typography>
+                                {product.description}
+                            </Typography>
+                        </Box>
+                        <Divider/>
+                    </>
                 )}
                 <Box
                     sx={{
@@ -67,9 +70,6 @@ export const ProductForm = ({isDescription, product}) => {
                         gap: 2
                     }}
                 >
-                    <Box>
-                        <Typography variant={'h6'}>Замовляйте зараз!</Typography>
-                    </Box>
                     <TextField
                         required
                         id="name"
