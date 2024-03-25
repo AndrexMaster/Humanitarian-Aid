@@ -46,7 +46,7 @@ export const UserProducts = (props) => {
             <Box>
                 <Masonry columns={3} spacing={2}>
                     {userProducts?.length > 0 && userProducts.map((product, index) => (
-                        <ProductItem key={index} product={product}/>
+                        <ProductItem isUserOwner={true} key={index} product={product}/>
                     ))}
                 </Masonry>
                 <Paper

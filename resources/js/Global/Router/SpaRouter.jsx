@@ -47,8 +47,10 @@ export const SpaRouter = () => {
                     </Route>
                     <Route path='/products'>
                         <Route index element={<Navigate to="/"/>} />
-                        <Route path=':categorySlug' element={<ProductsPage/>}/>
-                        <Route path=':productId' element={<ProductPage/>} />
+                        <Route path=':categorySlug'>
+                            <Route index  element={<ProductsPage/>} />
+                            <Route path=':productId' element={<ProductPage/>} />
+                        </Route>
                     </Route>
                     {userToken ?
                         <Route path='/auth' element={<Navigate to="/"/>}>

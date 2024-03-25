@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\isEmpty;
 
 class ProductsController extends Controller
 {
@@ -22,14 +24,14 @@ class ProductsController extends Controller
         return response()->json(['message' => 'categoryProducts']);
     }
 
-    public function product(Request $request)
+    public function product(Request $request, $productId)
     {
-        $request->validate([
-            'productId' => 'required|uuid',
-        ]);
-
-        $product = Product::with('category')->where('id', $request->productId)->get();
-        return response()->json(['product' => $product]);
+        try {
+            $product = Product::where('id', $productId)->with('category')->first();
+            return response()->json(['product' => $product]);
+        } catch (QueryException $exception) {
+            return response()->json(['message' => 'error']);
+        }
     }
 
     public function addProduct(Request $request)

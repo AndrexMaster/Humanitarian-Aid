@@ -39,9 +39,9 @@ Route::middleware('auth:sanctum')->prefix('user')->group(static function (){
 });
 
 Route::prefix('products')->group(static function (){
-    Route::get('/', [ProductsController::class, 'index']);
-    Route::get('/{category}', [ProductsController::class, 'categoryProducts']);
     Route::get('/{productId}', [ProductsController::class, 'product']);
+    Route::get('/{category}', [ProductsController::class, 'categoryProducts']);
+    Route::get('/', [ProductsController::class, 'index']);
 
     Route::middleware('auth:sanctum')->group(static function (){
         Route::post('/addProduct', [ProductsController::class, 'addProduct']);

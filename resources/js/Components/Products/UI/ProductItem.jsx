@@ -6,7 +6,8 @@ export const ProductItem = (props) => {
     const {
         product,
         setIsOpenDialog,
-        isPreview = false
+        isPreview,
+        isUserOwner,
     } = props;
     let navigate = useNavigate();
 
@@ -42,7 +43,15 @@ export const ProductItem = (props) => {
                 }}
                 image={product.imageSrc ?? 'https://via.placeholder.com/150'}
                 title="green iguana"
-                onClick={() => isPreview ? '' : navigate(`/products/${product.category.slug}/${product.id}`)}
+                onClick={() => {
+                    isPreview ?
+                        isUserOwner ?
+                            navigate(`/products/${product.category.slug}/${product.id}`)
+                        :
+                            ''
+                    :
+                        navigate(`/products/${product.category.slug}/${product.id}`)
+                }}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
@@ -54,7 +63,7 @@ export const ProductItem = (props) => {
             </CardContent>
             <CardActions>
                 <Button
-                    disabled={isPreview}
+                    disabled={isPreview || isUserOwner}
                     variant={'contained'}
                     sx={{
                         width: '100%',

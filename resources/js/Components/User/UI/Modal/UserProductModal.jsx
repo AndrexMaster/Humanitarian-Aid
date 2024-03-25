@@ -139,19 +139,15 @@ export const UserProductModal = (props) => {
                 <Box
                     sx={{
                         display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
+                        gridTemplateColumns: '1fr auto 1fr',
                         gap: 3,
                         width: '100%',
                     }}
                 >
                     <Box sx={{py: 2, width: '100%'}}>
-                        <ProductItem product={newProduct}/>
+                        <ProductItem isPreview={true} product={newProduct}/>
                     </Box>
-                    <Divider sx={{width: '100%'}}>
-                        <Typography sx={{color: '#aaa'}}>
-                            Впишіть данні продукту
-                        </Typography>
-                    </Divider>
+                    <Divider orientation="vertical" sx={{height: 'auto', my: '10px'}}/>
                     <Box
                         sx={{
                             display: 'flex',
