@@ -39,7 +39,7 @@ class CategoriesController extends Controller
                     'name' => $product->name,
                     'description' => $product->description,
                     'price' => $product->price,
-                    'imageSrc' => $product->image_src,
+                    'image_src' => $product->image_src,
                     'category' => [
                         'name' => $category->name,
                         'slug' => $category->slug,
@@ -68,7 +68,7 @@ class CategoriesController extends Controller
                 'name' => $product->name,
                 'description' => $product->description,
                 'price' => $product->price,
-                'imageSrc' => $product->image_src,
+                'image_src' => $product->image_src,
                 'category' => [
                     'name' => $category->name,
                     'slug' => $category->slug,

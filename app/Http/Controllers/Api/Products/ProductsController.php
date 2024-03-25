@@ -39,6 +39,7 @@ class ProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'fullDescription' => 'nullable|string|max:1000',
             'mediaFile' => 'required|file',
             'categoryId' => 'required|int',
         ]);
@@ -55,6 +56,7 @@ class ProductsController extends Controller
             'id' => Str::uuid(),
             'name' => $request->name,
             'description' => $request->description,
+            'full_description' => $request->fullDescription,
             'price' => 0,
             'image_src' => Storage::url($filePath),
             'category_id' =>  $request->categoryId,

@@ -8,6 +8,7 @@ export const ProductItem = (props) => {
         setIsOpenDialog,
         isPreview,
         isUserOwner,
+        sx = {}
     } = props;
     let navigate = useNavigate();
 
@@ -20,7 +21,8 @@ export const ProductItem = (props) => {
                 '&:hover': {
                     boxShadow: '0 0 10px 0 rgba(0,0,0,0.2)',
                     transform: 'scale(1.05)',
-                }
+                },
+                ...sx
             }}
         >
             {(product?.category?.name ?? product?.category?.name) && (
@@ -41,7 +43,7 @@ export const ProductItem = (props) => {
                     height: 140,
                     cursor: 'pointer',
                 }}
-                image={product.imageSrc ?? 'https://via.placeholder.com/150'}
+                image={product.image_src ?? 'https://via.placeholder.com/150'}
                 title="green iguana"
                 onClick={() => {
                     isPreview ?

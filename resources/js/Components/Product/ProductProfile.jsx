@@ -21,9 +21,11 @@ export const ProductProfile = ({product}) => {
                     p: 2
                 }}
             >
-                <ProductForm product={product ?? {}}/>
+                <ProductForm isDescription={true} product={product ?? {}}/>
             </Paper>
-            <ProductDescription product={product ?? {}}/>
+            {product?.full_description?.length > 0 && (
+                <ProductDescription product={product ?? {}}/>
+            )}
         </Box>
     )
 }

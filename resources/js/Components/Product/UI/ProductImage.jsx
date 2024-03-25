@@ -6,6 +6,8 @@ export const ProductImage = ({imageSrc}) => {
     return (
         <Paper
             sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 maxHeight: '70vh',
                 maxWidth: '100%',
                 boxSizing: 'border-box',

@@ -1,24 +1,28 @@
 import React from 'react';
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, Divider, Paper, Typography} from "@mui/material";
 
 export const ProductDescription = ({product}) => {
 
     return (
         <Paper
             sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 gridColumnStart: 1,
                 gridColumnEnd: 3,
-                p: 2
+                p: 2,
+                gap: 2,
             }}
         >
             <Box>
-                <Typography>
-                    123123123123
+                <Typography variant={'h4'}>
+                    Повний опис
                 </Typography>
+                <Divider/>
             </Box>
             <Box>
                 <Typography>
-                    345345345345
+                    {product.full_description}
                 </Typography>
             </Box>
         </Paper>

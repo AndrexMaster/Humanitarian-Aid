@@ -209,6 +209,15 @@ export const RegistrationForm = () => {
         >
             <TextField
                 required
+                id="surname_field"
+                label="Прізвище"
+                onChange={(e) => handleUserLastNameChange(e)}
+                error={!!userLastNameError}
+                helperText={userLastNameError}
+                name={'surname'}
+            />
+            <TextField
+                required
                 id="name_field"
                 label="Ім'я"
                 onChange={(e) => handleUserNameChange(e)}
@@ -224,15 +233,6 @@ export const RegistrationForm = () => {
                 error={!!userSecondNameError}
                 helperText={userSecondNameError}
                 name={'second_name'}
-            />
-            <TextField
-                required
-                id="surname_field"
-                label="Прізвище"
-                onChange={(e) => handleUserLastNameChange(e)}
-                error={!!userLastNameError}
-                helperText={userLastNameError}
-                name={'surname'}
             />
             <TextField
                 id="company_name_field"

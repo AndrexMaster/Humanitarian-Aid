@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Button, Divider, TextField, Typography} from "@mui/material";
 
-export const ProductForm = ({product}) => {
+export const ProductForm = ({isDescription, product}) => {
 
     const [userNameError, setUserNameError] = useState()
     const [userPhoneError, setUserPhoneError] = useState()
@@ -49,41 +49,60 @@ export const ProductForm = ({product}) => {
                     height: '100%',
                 }}
             >
-                <Box>
-                    <Typography variant={'h6'}>Замовляйте зараз!</Typography>
-                </Box>
-                <TextField
-                    required
-                    id="name"
-                    label="Ім'я"
-                    error={!!userNameError}
-                    helperText={userNameError}
-                    onChange={(e) => handleNameChange(e)}
-                    name={'name'}
-                />
-                <TextField
-                    required
-                    id="phone"
-                    label="Телефон"
-                    error={!!userPhoneError}
-                    helperText={userPhoneError}
-                    onChange={(e) => handlePhoneChange(e)}
-                    name={'name'}
-                />
-                <TextField
-                    required
-                    id="comment"
-                    label="Коментар"
-                    error={!!userCommentError}
-                    helperText={userCommentError}
-                    onChange={(e) => handleCommentChange(e)}
-                    name={'comment'}
-                />
-                <Button
-                    variant={'contained'}
+                {isDescription && product.description?.length > 0 && (
+                    <Box
+                        sx={{
+                            flex: 1
+                        }}
+                    >
+                        <Typography>
+                            {product.description}
+                        </Typography>
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2
+                    }}
                 >
-                    Замовити
-                </Button>
+                    <Box>
+                        <Typography variant={'h6'}>Замовляйте зараз!</Typography>
+                    </Box>
+                    <TextField
+                        required
+                        id="name"
+                        label="Ім'я"
+                        error={!!userNameError}
+                        helperText={userNameError}
+                        onChange={(e) => handleNameChange(e)}
+                        name={'name'}
+                    />
+                    <TextField
+                        required
+                        id="phone"
+                        label="Телефон"
+                        error={!!userPhoneError}
+                        helperText={userPhoneError}
+                        onChange={(e) => handlePhoneChange(e)}
+                        name={'name'}
+                    />
+                    <TextField
+                        required
+                        id="comment"
+                        label="Коментар"
+                        error={!!userCommentError}
+                        helperText={userCommentError}
+                        onChange={(e) => handleCommentChange(e)}
+                        name={'comment'}
+                    />
+                    <Button
+                        variant={'contained'}
+                    >
+                        Замовити
+                    </Button>
+                </Box>
             </Box>
         </Box>
     )
