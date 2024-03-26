@@ -12,7 +12,7 @@ export const MainBanner = () => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        if (userId === null) return;
+        if (userId === null || authToken === null) return;
         const config = {
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -116,7 +116,7 @@ export const MainBanner = () => {
                                 {userId === null ?
                                     'Увійти до аккаунту'
                                 :
-                                    `Вітаємо, ${user?.name ?? ''} ${user?.secondName ?? ''} ${user?.surname ?? ''} !`
+                                    `Вітаємо, ${user?.surname ?? ''} ${user?.name ?? ''} ${user?.second_name ?? ''}!`
                                 }
                             </Typography>
                             {userId === null && (

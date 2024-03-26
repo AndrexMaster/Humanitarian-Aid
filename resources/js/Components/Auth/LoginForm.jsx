@@ -3,7 +3,7 @@ import {Box, Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setUser, setUserId} from "../../Storage/Redux/Auth/authSlice.js";
+import {setUser, setUserId, setUserToken} from "../../Storage/Redux/Auth/authSlice.js";
 
 export const LoginForm = (props) => {
     const {
@@ -79,6 +79,7 @@ export const LoginForm = (props) => {
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('userId', userId);
             dispatch(setUserId(userId));
+            dispatch(setUserToken(authToken));
             dispatch(setUser(response.data.user));
 
             navigate('/');

@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::middleware('auth:sanctum')->prefix('user')->group(static function (){
     Route::get('/{userId}', [UserController::class, 'index']);
-    Route::post('/{userId}', [UserController::class, 'update']);
+    Route::post('/update', [UserController::class, 'update']);
     Route::get('/{userId}/products', [UserController::class, 'userProducts']);
     Route::get('/{userId}/notifications', [UserController::class, 'userNotifications']);
     Route::post('/{userId}/notifications', [UserController::class, 'userNotifications']);

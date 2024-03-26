@@ -15,7 +15,7 @@ class UserController extends Controller
         $user = User::find($userId);
         return response()->json(['user' => [
             'name' => $user->name,
-            'secondName' => $user->second_name,
+            'second_name' => $user->second_name,
             'surname' => $user->surname,
             'email' => $user->email,
             'companyName' => $user->company_name,
@@ -24,7 +24,31 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        return response()->json(['message' => 'userUpdate']);
+        // Валидация входящих данных
+        $request->validate([
+            'name' => 'string|max:255',
+            'second_name' => 'string|max:255',
+            'surname' => 'string|max:255',
+            'email' => 'required|email|unique:users,email,'.$request->user()->id,
+        ]);
+
+        // Получение текущего пользователя
+        $user = $request->user();
+
+        // Обновление данных пользователя
+        $user->name = $request->input('name');
+        $user->second_name = $request->input('second_name');
+        $user->surname = $request->input('surname');
+        $user->email = $request->input('email');
+
+        // Сохранение изменений
+        $user->save();
+
+        // Возврат успешного ответа с сообщением
+        return response()->json([
+            'message' => 'User information updated successfully',
+            'user' => $user,
+        ]);
     }
 
     public function userProducts(Request $request, $userId)
